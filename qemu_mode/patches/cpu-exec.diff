@@ -1,27 +1,23 @@
---- qemu-2.3.0/cpu-exec.c.orig     2014-12-09 14:45:40.000000000 +0000
-+++ qemu-2.3.0/cpu-exec.c  2015-02-20 22:07:02.966000000 +0000
-@@ -28,6 +28,8 @@
- #include "exec/memory-internal.h"
- #include "qemu/rcu.h"
-
+--- qemu-2.5.1/cpu-exec.c.orig  2016-04-27 03:44:02.035401672 +0900
++++ qemu-2.5.1/cpu-exec.c       2016-04-27 03:44:18.202976902 +0900
+@@ -31,6 +31,7 @@
+ #include "hw/i386/apic.h"
+ #endif
+ #include "sysemu/replay.h"
 +#include "../patches/afl-qemu-cpu-inl.h"
-+
+
  /* -icount align implementation. */
 
- typedef struct SyncClocks {
-@@ -296,8 +298,11 @@
-     }
-  not_found:
-    /* if no translated code available, then translate it now */
-+
+@@ -289,6 +290,8 @@
+     /* if no translated code available, then translate it now */
      tb = tb_gen_code(cpu, pc, cs_base, flags, 0);
 
 +    AFL_QEMU_CPU_SNIPPET1;
 +
-  found:
-     /* Move the last found TB to the head of the list */
-     if (likely(*ptb1)) {
-@@ -492,6 +497,9 @@
+ #ifdef CONFIG_USER_ONLY
+     mmap_unlock();
+ #endif
+@@ -499,6 +502,9 @@
                      next_tb = 0;
                      tcg_ctx.tb_ctx.tb_invalidated_flag = 0;
                  }

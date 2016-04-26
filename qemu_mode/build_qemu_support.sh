@@ -22,8 +22,8 @@
 # will be written to ../afl-qemu-trace.
 #
 
-QEMU_URL="http://wiki.qemu-project.org/download/qemu-2.3.0.tar.bz2"
-QEMU_SHA384="7a0f0c900f7e2048463cc32ff3e904965ab466c8428847400a0f2dcfe458108a68012c4fddb2a7e7c822b4fd1a49639b"
+QEMU_URL="http://wiki.qemu-project.org/download/qemu-2.5.1.tar.bz2"
+QEMU_SHA384="223b6b5e5bece157e89b20c04209726726a860733044270acb6e98af1591916712148bb8e6413c8bce8104921f9845d0"
 
 echo "================================================="
 echo "AFL binary-only instrumentation QEMU build script"
@@ -119,7 +119,6 @@ echo "[*] Applying patches..."
 
 patch -p0 <patches/elfload.diff || exit 1
 patch -p0 <patches/cpu-exec.diff || exit 1
-patch -p0 <patches/translate-all.diff || exit 1
 patch -p0 <patches/syscall.diff || exit 1
 
 echo "[+] Patching done."
